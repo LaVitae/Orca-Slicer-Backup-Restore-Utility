@@ -3,6 +3,7 @@ import sys
 import shutil
 import tkinter as tk
 from tkinter import messagebox, filedialog
+from datetime import datetime
 
 def getuser():
     user = os.getlogin()  # Get the current user's username.
@@ -20,7 +21,8 @@ def backup(source_directory, target_directory):
         if not os.path.exists(target_directory):
             os.makedirs(target_directory)
 
-        outputfile = os.path.join(target_directory, "user-backup-test")  # Define the name of the archive.
+        current_date = datetime.now().strftime("%Y_%m_%d")
+        outputfile = os.path.join(target_directory, f"OrcaSlicerSettingsBackup_{current_date}") # Define the name of the archive.
         shutil.make_archive(outputfile, 'zip', source_directory)  # Create the zip archive.
         messagebox.showinfo("Backup Complete", f"Backup saved as {outputfile}.zip")
     except Exception as e:
@@ -67,7 +69,7 @@ def on_backup_button_click():
 
 # Create the main window
 root = tk.Tk()
-root.title("OrcaSlicer Backup Utility v1.0 - by LaVitae")
+root.title("OrcaSlicer Backup Utility v1.1 - by LaVitae")
 root.resizable(False, False)
 
 # Set the width and height of the window
@@ -137,4 +139,5 @@ backup_button = tk.Button(root, text="Backup", command=on_backup_button_click)
 backup_button.pack(pady=(10,0))
 
 # Run the application
+
 root.mainloop()
